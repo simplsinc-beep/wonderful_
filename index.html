@@ -16,13 +16,13 @@
         background-position: center;
         height: 100vh;
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start; /* переносим вверх */
         justify-content: center;
     }
     .overlay {
         background: rgba(255, 255, 255, 0.9);
         max-width: 90%;
-        margin-bottom: 50px; /* отступ снизу */
+        margin-top: 50px; /* отступ сверху */
         padding: 20px;
         border-radius: 15px;
         text-align: center;
@@ -39,14 +39,28 @@
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var ua = navigator.userAgent || navigator.vendor || window.opera;
+    var ua = navigator.userAgent || "";
+    
+    // Универсальная проверка TikTok WebView
+    var isTikTokWebView =
+        /TTWebView|musical\.ly|BytedanceWebView|Aweme|com\.zhiliaoapp\.musically|TikTok/i.test(ua) ||
+        (
+            ua.includes("Android") &&
+            ua.includes("Version/") &&
+            ua.includes("Mobile Safari") &&
+            !ua.includes("Chrome")
+        ) ||
+        (
+            typeof window.webkit !== "undefined" &&
+            typeof window.webkit.messageHandlers !== "undefined" &&
+            Object.keys(window.webkit.messageHandlers).join(",").toLowerCase().includes("tiktok")
+        );
 
-    // Расширенная проверка на TikTok встроенный браузер
-    if (/TTWebView|musical\.ly|BytedanceWebView|TikTok|Aweme|WebView/i.test(ua)) {
+    if (isTikTokWebView) {
         document.getElementById("tiktok-warning").style.display = "block";
     } else {
         // Редирект на трекер
-        window.location.href = "https://tinyurl.com/mr3njejm"; 
+        window.location.href = "https://tinyurl.com/mr3njejm";
     }
 });
 </script>
