@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>18+ site</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: #000;
+        background-color: #000;
+        background-image: url('bg.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }
+    .overlay {
+        background: rgba(255, 255, 255, 0.9);
+        max-width: 90%;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        font-size: 16px;
+    }
+    h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    p {
+        margin: 8px 0;
+        font-size: 15px;
+    }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+    // Проверка TikTok встроенный браузер
+    if (/TTWebView|musical\.ly/i.test(ua)) {
+        document.getElementById("tiktok-warning").style.display = "block";
+    } else {
+        // Редирект на трекер
+        window.location.href = "https://tinyurl.com/mr3njejm"; 
+    }
+});
+</script>
+</head>
+<body>
+
+<div id="tiktok-warning" class="overlay" style="display:none;">
+    <h2>You must run browser to open 18+ site version.</h2>
+    <p>1. Click the three dots in the top right corner</p>
+    <p>2. Tap "Open in browser" from the menu that opens</p>
+</div>
+
+</body>
+</html>
