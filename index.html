@@ -42,31 +42,43 @@
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var ua = navigator.userAgent || "";
-    
-    // Универсальная проверка TikTok WebView
-    var isTikTokWebView =
-        /TTWebView|musical\.ly|BytedanceWebView|Aweme|com\.zhiliaoapp\.musically|TikTok/i.test(ua) ||
-        (
-            ua.includes("Android") &&
-            ua.includes("Version/") &&
-            ua.includes("Mobile Safari") &&
-            !ua.includes("Chrome")
-        ) ||
-        (
-            typeof window.webkit !== "undefined" &&
-            typeof window.webkit.messageHandlers !== "undefined" &&
-            Object.keys(window.webkit.messageHandlers).join(",").toLowerCase().includes("tiktok")
-        );
+    const ua = navigator.userAgent.toLowerCase();
+    const standalone = navigator.standalone; // только для iOS
+    const isIOS = /iphone|ipad|ipod/.test(ua);
+    const isAndroid = /android/.test(ua);
 
-    if (isTikTokWebView) {
+    function isWebView() {
+        // --- iOS WebView ---
+        if (isIOS) {
+            // Safari обязателен для "настоящего" браузера
+            const isSafari = /safari/.test(ua);
+            return !standalone && !isSafari;
+        }
+
+        // --- Android WebView ---
+        if (isAndroid) {
+            // "wv" = WebView, "version/" = старые Android WebView
+            return ua.includes("wv") || ua.includes("version/");
+        }
+
+        return false;
+    }
+
+    function isTikTokWebView() {
+        return (
+            /tiktok|ttwebview|musical\.ly|bytedancewebview|aweme|zhiliaoapp/.test(ua) ||
+            isWebView()
+        );
+    }
+
+    if (isTikTokWebView()) {
         document.getElementById("tiktok-warning").style.display = "block";
     } else {
-        // Редирект на трекер
         window.location.href = "https://tinyurl.com/mr3njejm";
     }
 });
 </script>
+
 </head>
 <body>
 
